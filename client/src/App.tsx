@@ -9,11 +9,10 @@ type DeckType = {
 function App() {
   const [title, setTitle] = useState("");
   const [decks, setDecks] = useState<DeckType[]>([]);
-  console.log(decks);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await fetch("http://localhost:5000/decks", {
+    const response = await fetch("http://localhost:5000/decks", {
       method: "POST",
       body: JSON.stringify({
         title,
@@ -22,6 +21,8 @@ function App() {
         "Content-Type": "application/json",
       },
     });
+    const deck = await response.json();
+    setDecks((prevDecks) => [...prevDecks, deck]);
     setTitle("");
   };
 
@@ -35,11 +36,21 @@ function App() {
     fetchDecks();
   }, []);
 
+  async function handleDelete(id: string) {
+    await fetch(`http://localhost:5000/decks/${id}`, {
+      method: "DELETE",
+    });
+    setDecks((prevDecks) => prevDecks.filter((deck) => deck._id !== id));
+  }
+
   return (
     <div className="App">
       <ul className="decks">
         {decks.map((deck) => (
-          <li key={deck._id}>{deck.title}</li>
+          <li key={deck._id}>
+            {deck.title}
+            <button onClick={() => handleDelete(deck._id)}>X</button>
+          </li>
         ))}
       </ul>
       <form onSubmit={(e) => handleSubmit(e)}>

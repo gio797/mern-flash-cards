@@ -27,7 +27,10 @@
 }
 
 .decks > li {
+  position: relative;
   display: flex;
+
+  gap: 20px;
   align-items: center;
   justify-content: center;
   height: 150px;
@@ -36,9 +39,11 @@
   border: 2px solid dodgerblue;
   border-radius: 20px;
   box-shadow: 5px 5px 10px 1px #000000;
-  cursor: pointer;
 }
 
-.decks > li:hover {
-  background-color: rgb(134, 194, 255);
+.decks > li > button {
+  padding: 10px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }

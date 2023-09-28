@@ -23,6 +23,12 @@ app.post("/decks", async (req, res) => {
   res.json(createdDeck);
 });
 
+app.delete("/decks/:id", async (req, res) => {
+  const id = req.params.id;
+  const deck = await Deck.findByIdAndDelete(id);
+  res.json(deck);
+});
+
 mongoose.connect(process.env.MONGO_URL).then(() => {
   app.listen(PORT, console.log("listening"));
 });
