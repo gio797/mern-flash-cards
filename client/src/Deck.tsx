@@ -1,46 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { useParams } from "react-router-dom";
 
 import { createCard } from "./api/createCard";
+import { getDeck } from "./api/getDeck";
+import { DeckType } from "./api/getDecks";
+import { deleteCard } from "./api/deleteCard";
 
 function Deck() {
+  const [deck, setDeck] = useState<DeckType | undefined>();
   const [text, setText] = useState("");
-  // const [decks, setDecks] = useState<DeckType[]>([]);
+  const [cards, setCards] = useState<string[]>([]);
+
   const params = useParams();
   const id = params.id?.split(":")[1];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const deck = await createCard(id!, text);
-    // setDecks((prevDecks) => [...prevDecks, deck]);
+    const { cards: serverCards } = await createCard(id!, text);
+    setCards(serverCards);
     setText("");
   };
 
-  // useEffect(() => {
-  //   async function fetchDecks() {
-  //     const newDecks = await getDecks();
-  //     setDecks(newDecks);
-  //   }
+  useEffect(() => {
+    async function fetchDeck() {
+      if (!id) return;
+      const newDeck = await getDeck(id);
+      setDeck(newDeck);
+      setCards(newDeck.cards);
+    }
 
-  //   fetchDecks();
-  // }, []);
+    fetchDeck();
+  }, [id]);
 
-  // async function handleDelete(id: string) {
-  //   await deleteDeck(id);
-  //   setDecks((prevDecks) => prevDecks.filter((deck) => deck._id !== id));
-  // }
+  async function handleDeleteCard(index: number) {
+    if (!id) return;
+    const newDeck = await deleteCard(id, index);
+    setCards(newDeck.cards);
+  }
 
   return (
-    <div className="deck">
-      {/* <ul className="decks">
-        {decks.map((deck) => (
-          <li key={deck._id}>
-            <Link to={`/decks/:${deck._id}`}>{deck.title}</Link>
-            <button onClick={() => handleDelete(deck._id)}>X</button>
+    <div>
+      <h2>{deck?.title}</h2>
+      <ul className="decks">
+        {cards.map((card, index) => (
+          <li key={index}>
+            <button onClick={() => handleDeleteCard(index)}>X</button>
+            {card}
           </li>
         ))}
-      </ul> */}
+      </ul>
       <form onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor="deck-text">Card text</label>
         <input
