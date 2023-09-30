@@ -1,26 +1,20 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.App {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.App form {
+form {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 20px;
+}
+
+.decks-container {
+  margin: 20px auto;
+  width: 600px;
+  text-align: center;
 }
 
 .decks {
   padding-left: 0;
   width: 600px;
-  margin: 0 auto;
+  margin: 40px auto;
   display: grid;
   grid-gap: 20px;
   grid-template-columns: repeat(3, 1fr);
@@ -29,7 +23,6 @@
 .decks > li {
   position: relative;
   display: flex;
-
   gap: 20px;
   align-items: center;
   justify-content: center;
@@ -46,4 +39,8 @@
   position: absolute;
   top: 5px;
   right: 5px;
+}
+
+.center {
+  text-align: center;
 }

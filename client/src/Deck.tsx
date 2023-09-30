@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { useParams } from "react-router-dom";
-
 import { createCard } from "./api/createCard";
 import { getDeck } from "./api/getDeck";
 import { DeckType } from "./api/getDecks";
@@ -40,7 +39,7 @@ function Deck() {
   }
 
   return (
-    <div>
+    <div className="decks-container">
       <h2>{deck?.title}</h2>
       <ul className="decks">
         {cards.map((card, index) => (
