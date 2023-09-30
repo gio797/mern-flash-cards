@@ -21,6 +21,7 @@ form {
 }
 
 .decks > li {
+  padding: 10px;
   position: relative;
   display: flex;
   gap: 20px;
@@ -29,9 +30,13 @@ form {
   height: 150px;
   background-color: rgba(255, 255, 255, 0.87);
   color: #242424;
-  border: 2px solid dodgerblue;
+  border: 3px solid #646cff;
   border-radius: 20px;
   box-shadow: 5px 5px 10px 1px #000000;
+}
+
+.decks > li:hover {
+  border: 3px solid #535bf2;
 }
 
 .decks > li > button {
